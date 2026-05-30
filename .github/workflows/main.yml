@@ -2,10 +2,12 @@ name: Exemplo Output
 run-name: Exemplo workflow para output, executado por ${{ github.actor }}
 on:
   workflow_dispatch: # Adicionado o gatilho manual para o workflow rodar
+
 jobs:
   gerando_output:
     runs-on: ubuntu-latest
     steps:
+      # Bloco do primeiro exemplo: Gerando e exibindo um número aleatório
       - name: Gerando output com shell
         id: exemplo-output
         run: |
@@ -14,4 +16,13 @@ jobs:
 
       - name: Exibindo o ouput da action exemplo output
         run: echo "${{ steps.exemplo-output.outputs.action_random }}"
-       
+
+      # Bloco do segundo exemplo: Usando a Action de terceiros para gerar senha
+      - name: Gerador de Senha
+        id: generatedpassword
+        uses: aammirmirza/RandomPasswordGenerator@v1.1
+        with:
+          length: 15
+      
+      - name: Exibindo o output da action de password
+        run: echo "${{ steps.generatedpassword.outputs.password }}"
